@@ -11,11 +11,7 @@
 html {
   position: relative;
   min-height: 100%;
-}
-
-body {
-  padding-top: 60px;
-  margin-bottom: 75px;
+  margin: 0px;
 }
 
 footer {
@@ -67,4 +63,33 @@ textarea {
 
 .fa {
   margin-right: 6px;
+}
+
+// Home Styling
+.kids {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+$contact-icon-size: 50px;
+
+.contact {
+  flex: 1;
+  min-width: $contact-icon-size;
+  min-height: $contact-icon-size;
+  max-width: $contact-icon-size;
+  max-height: $contact-icon-size;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.contact-img {
+  min-width: $contact-icon-size;
+  min-height: $contact-icon-size;
+  height: $contact-icon-size;
+  margin-left: 50%;
+  transform: translateX(-50%)
 }
