@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1(id='breadcrumbs') < goals < queue
+  hr
+  .row(style={margin: 0})
+    .col-sm-6(style={background:'#ff00ff'})
+      - var goal = 0
+      while goal < goals.length
+        h2(class="select-goal", id=goals[goal])= goals[goal]
+        - goal++
+    .col-sm-6(style={background:'#00ff00'}, id="create-goal")
+      h2 add goal

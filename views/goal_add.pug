@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1(id='breadcrumbs') < goals < queue
+  hr
+  .row(style={margin: 0})
+    .col-sm-6(style={background:'#ff00ff'})
+      input(type="text")
+    .col-sm-6(style={background:'#00ff00'}, id="submit-create-goal")
+      h2 submit

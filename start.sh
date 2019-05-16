@@ -1,3 +1,3 @@
 sudo service mongod start
 npm run build
-npm start
+npm run serve
