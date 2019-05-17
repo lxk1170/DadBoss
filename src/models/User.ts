@@ -1,17 +1,21 @@
 import mongoose from "mongoose";
 
-export type UserModel = mongoose.Document & {
-  id: number, // unique id used to identify user
+export interface IUser {
+  id: string, // unique id used to identify user
   name: string,
   picture: string, // url
-  friends: Array<number>
-};
+  friends: Array<number>,
+  goals: Array<string>
+}
+
+export type UserModel = mongoose.Document & IUser
 
 const userSchema = new mongoose.Schema({
-  id: Number,
+  id: String,
   name: String,
   picture: String,
-  friends: [Number]
+  friends: [Number],
+  goals: [String]
 }, { timestamps: true });
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);

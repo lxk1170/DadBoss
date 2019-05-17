@@ -40,8 +40,14 @@ $(document).ready(function () {
 
   // submit a new goal
   $("#submit-create-goal").click(() => {
-    // TODO post to /goals/queue/add
-    console.log("TODO: post to backend")
-    window.location.href = "/goals/queue/"
+    const goal = $("#goal-in").val()
+
+    $.post("goals/queue/add", { goal: goal }, (msg) => {
+      // TODO: peek success message
+      console.log("received message: " + msg)
+    })
+
+    window.location.href = "/goals/queue"
   })
+
 });

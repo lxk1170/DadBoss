@@ -92,9 +92,9 @@ app.use((req, res, next) => {
     id: uniqid(),
     name: "TurkeyBacon",
     picture: "http://tiny.cc/3rzt6y",
-    friends: [420, 210]
+    friends: [420, 210],
+    goals: ["fuck ur mommy", "shit your bed", "skydive", "eat her ass"]
   })
-
 
   // TODO: authenticate the user
 
@@ -109,5 +109,5 @@ app.get("/", homeController.index);
 app.get("/goals", goalsController.index);
 app.get("/goals/queue", goalsController.queue);
 app.get("/goals/queue/add", goalsController.add);
-
+app.post("/goals/queue/add", goalsController.create)
 export default app;

@@ -1,4 +1,8 @@
 import { Request, Response } from "express";
+import { url } from "inspector";
+import User, { IUser } from "../models/User"
+import mongoose from "mongoose";
+import { userInfo } from "os";
 
 /**
  * GET /goals
@@ -16,11 +20,16 @@ export let index = (req: Request, res: Response) => {
  * Page listing uncompleted goals.
  */
 export let queue = (req: Request, res: Response) => {
+  view_queue(res, "queue successfully loaded")
+};
+
+const view_queue = (res: Response, msg: string) => {
   res.render("goal_queue", {
     title: "Goal Queue",
-    goals: ["watch a new movie", "read an exciting book", "do acid", "literally eat shit"]
+    goals: ["watch a new movie", "read an exciting book", "do acid", "literally eat shit"],
+    alert: msg
   });
-};
+}
 
 /**
  * GET /goals/queue/add
@@ -37,6 +46,16 @@ export let add = (req: Request, res: Response) => {
  * Add a new goal to the queue.
  */
 export let create = (req: Request, res: Response) => {
-  // TODO: add the goal to the database
-  queue(req, res) // visit queue page
+  const goal = req.body.goal
+  const user = req.user
+  user.goals.push(goal)
+  console.log(goal)
+  user.save((err: any) => {
+    if (err) {
+      return console.error(err)
+    }
+  })
+
+  const msg = ("Goal has been successfully added!")
+  view_queue(res, msg) // visit queue page
 };
