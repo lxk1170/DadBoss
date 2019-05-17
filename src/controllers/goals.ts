@@ -17,13 +17,13 @@ export let index = (req: Request, res: Response) => {
  */
 export let queue = (req: Request, res: Response) => {
   res.render("goal_queue", {
-    title: "Goals Todo",
+    title: "Goal Queue",
     goals: ["watch a new movie", "read an exciting book", "do acid", "literally eat shit"]
   });
 };
 
 /**
- * GET /goals/add
+ * GET /goals/queue/add
  * Goals page.
  */
 export let add = (req: Request, res: Response) => {
@@ -32,4 +32,11 @@ export let add = (req: Request, res: Response) => {
   });
 };
 
-
+/**
+ * POST /goals/queue/add
+ * Add a new goal to the queue.
+ */
+export let create = (req: Request, res: Response) => {
+  // TODO: add the goal to the database
+  queue(req, res) // visit queue page
+};
