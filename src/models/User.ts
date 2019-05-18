@@ -1,21 +1,25 @@
 import mongoose from "mongoose";
 
 export interface IUser {
-  id: string, // unique id used to identify user
+  _id: string, // unique id used to identify user
   name: string,
   picture: string, // url
   friends: Array<number>,
-  goals: Array<string>
+  hasGoal: boolean, // whether or not the user has an active goal
+  queue: Array<string>,
+  achieved: Array<string> // ordered from past to most recent, .pop to get last
 }
 
 export type UserModel = mongoose.Document & IUser
 
 const userSchema = new mongoose.Schema({
-  id: String,
+  _id: String,
   name: String,
   picture: String,
   friends: [Number],
-  goals: [String]
+  hasGoal: Boolean,
+  queue: [String],
+  achieved: [String]
 }, { timestamps: true });
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);

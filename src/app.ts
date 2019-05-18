@@ -14,7 +14,7 @@ import expressValidator from "express-validator";
 import bluebird from "bluebird";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 import uniqid from "uniqid"
-import User from "./models/User";
+import User, { IUser } from "./models/User";
 
 const MongoStore = mongo(session);
 
@@ -24,6 +24,7 @@ dotenv.config({ path: ".env.example" });
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
 import * as goalsController from "./controllers/goals";
+import async from "async";
 
 // Create Express server
 const app = express();
@@ -60,24 +61,6 @@ app.use(passport.session());
 app.use(flash());
 app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
-app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
-app.use((req, res, next) => {
-  // After successful login, redirect back to the intended page
-  if (!req.user &&
-    req.path !== "/login" &&
-    req.path !== "/signup" &&
-    !req.path.match(/^\/auth/) &&
-    !req.path.match(/\./)) {
-    req.session.returnTo = req.path;
-  } else if (req.user &&
-    req.path == "/account") {
-    req.session.returnTo = req.path;
-  }
-  next();
-});
 
 app.use(
   express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
@@ -86,19 +69,50 @@ app.use(
 /**
  * Middleware
  */
-app.use((req, res, next) => {
-  // TODO: get the user from the database
-  const user = new User({
-    id: uniqid(),
-    name: "TurkeyBacon",
-    picture: "http://tiny.cc/3rzt6y",
-    friends: [420, 210],
-    goals: ["fuck ur mommy", "shit your bed", "skydive", "eat her ass"]
-  })
+app.use(async (req, res, next) => {
+  const carlId = "carl4" // TODO: remove
+  const count = await User.count({ _id: carlId })
+  console.log("count: " + count)
 
-  // TODO: authenticate the user
+  if (count > 0) {
+    // find
+    return User.findOne({ _id: carlId }, (err, user: IUser) => {
+      if (err) {
+        console.error("User exists, but unable to find")
+      } else {
+        console.info("user found and added")
+        req.user = user
+      }
+    })
+  } else {
+    // create TODO: remove
+    const user: IUser = {
+      _id: carlId,
+      name: "CarlBites",
+      picture: "http://tiny.cc/3rzt6y",
+      friends: [420, 210],
+      hasGoal: false,
+      queue: ["fuck ur mommy", "shit your bed", "skydive", "eat her ass"],
+      achieved: ["run around naked", "preschool", "dog sitting"] // the last goal on active is the current goal
+    }
+    const userModel = new User(user)
 
-  req.user = user
+    // save
+    userModel.save((err: any, results) => {
+      console.log(results)
+      if (err) {
+        console.log("failed to save new user")
+        console.error("error: " + err)
+      } else {
+        console.log("new user saved")
+        req.user = user
+      }
+    })
+
+    req.user = user
+  }
+
+  console.log("req.user: " + JSON.stringify(req.user))
   next()
 })
 

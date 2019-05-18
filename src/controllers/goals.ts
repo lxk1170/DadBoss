@@ -9,9 +9,19 @@ import { userInfo } from "os";
  * Goals page.
  */
 export let index = (req: Request, res: Response) => {
+  const achieved = req.user.achieved
+
+  const today = new Date()
+  const dayNumber = today.getDay()
+
+  const weekGoals = [] // this weeks completed goals, starting monday
+  for (let i = 0; i < dayNumber; i++) {
+    weekGoals.push(achieved[achieved.length - i])
+  }
+
   res.render("goals", {
     title: "Goals",
-    goals: ["eat pizza", "do the dishes", "fuck horses", "eat shit, carl"],
+    goals: weekGoals,
   });
 };
 
@@ -20,16 +30,11 @@ export let index = (req: Request, res: Response) => {
  * Page listing uncompleted goals.
  */
 export let queue = (req: Request, res: Response) => {
-  view_queue(res, "queue successfully loaded")
-};
-
-const view_queue = (res: Response, msg: string) => {
   res.render("goal_queue", {
     title: "Goal Queue",
-    goals: ["watch a new movie", "read an exciting book", "do acid", "literally eat shit"],
-    alert: msg
+    goals: req.user.queue
   });
-}
+};
 
 /**
  * GET /goals/queue/add
@@ -48,14 +53,16 @@ export let add = (req: Request, res: Response) => {
 export let create = (req: Request, res: Response) => {
   const goal = req.body.goal
   const user = req.user
-  user.goals.push(goal)
-  console.log(goal)
-  user.save((err: any) => {
+  console.log("goal: " + goal)
+  user.queue.push(goal)
+  User.update({ id: user.id }, user, {}, (err: any) => {
     if (err) {
+      console.log("Failed to save goal into database.")
+      res.status(200).send("Failed to update queue")
       return console.error(err)
+    } else {
+      console.info("Successfully updated user: " + JSON.stringify(user))
+      res.status(200).send("Queue successfully updated")
     }
   })
-
-  const msg = ("Goal has been successfully added!")
-  view_queue(res, msg) // visit queue page
 };

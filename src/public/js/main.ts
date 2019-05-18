@@ -42,12 +42,16 @@ $(document).ready(function () {
   $("#submit-create-goal").click(() => {
     const goal = $("#goal-in").val()
 
-    $.post("goals/queue/add", { goal: goal }, (msg) => {
+    $.post(window.location.origin + "/goals/queue/add", { goal: goal }, (msg) => {
       // TODO: peek success message
       console.log("received message: " + msg)
+
+      // redirect
+      setTimeout(() => {
+        window.location.href = "/goals/queue"
+      }, 2000)
     })
 
-    window.location.href = "/goals/queue"
   })
 
 });
