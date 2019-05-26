@@ -5,12 +5,12 @@ block content
   hr
   .row(style={margin: 0})
     - var day = 0
-    .col-sm-6(style={background:'#ff00ff'})
-      - var wochentage = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+    .col-sm-6
+      - var wochentage = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
       while day < goals.length
-        p= wochentage[day]
+        p(style={background: '#ff00ff'})= wochentage[day]
           h2= goals[day]
           - day++
     .col-sm-6(style={background:'#ffff00'}, id="set-active-goal")
       p= wochentage[goals.length]
-        h2 EMPTY
+        h2= activeGoal
