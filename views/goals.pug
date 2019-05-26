@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1(id='breadcrumbs') < goals
+  hr
+  .row(style={margin: 0})
+    - var day = 0
+    .col-sm-6(style={background:'#ff00ff'})
+      - var wochentage = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+      while day < goals.length
+        p= wochentage[day]
+          h2= goals[day]
+          - day++
+    .col-sm-6(style={background:'#ffff00'}, id="set-active-goal")
+      p= wochentage[goals.length]
+        h2 EMPTY

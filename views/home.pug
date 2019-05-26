@@ -1,27 +1,39 @@
 extends layout
 
 block content
-  h1 Hackathon Starter
-  p.lead A boilerplate for Node.js web applications.
+  h1 DadBoss
+  p.lead WHO'S
+    strong  YOUR
+    span  DADDY?
   hr
-  .row
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+  .row(style={margin: 0})
+    .col-sm-6(style={background:'#f0f5f9'})
+      h2 daddy says
       p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        strong big daddy
+        em  - "get your ass on the lawn mower"
       p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
-    .col-sm-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-default(href='#', role='button') View details »
+        strong suave pubes
+        em  - "mow harder!"
+    .col-sm-6(style={background:'#f9f0f5'}, id="active-goal")
+      p curr obj
+      h2 #{activeGoal}
+    .col-sm-6(style={background:'#f9f5f0'})
+      h2 boss kids
+      .kids
+        .contact
+          img.contact-img(src='https://i.ytimg.com/vi/-QdfHMWsou0/maxresdefault.jpg')
+        .contact
+          img.contact-img(src='https://i.ytimg.com/vi/-QdfHMWsou0/maxresdefault.jpg')
+        .contact
+          img.contact-img(src='https://i.ytimg.com/vi/-QdfHMWsou0/maxresdefault.jpg')
+        .contact
+          img.contact-img(src='https://i.ytimg.com/vi/-QdfHMWsou0/maxresdefault.jpg')
+        .contact
+          img.contact-img(src='https://i.ytimg.com/vi/-QdfHMWsou0/maxresdefault.jpg')
+        .contact
+          img.contact-img(src='https://i.ytimg.com/vi/-QdfHMWsou0/maxresdefault.jpg')
+        .contact
+          img.contact-img(src='https://i.ytimg.com/vi/-QdfHMWsou0/maxresdefault.jpg')
+        .contact
+          img.contact-img(src='https://i.ytimg.com/vi/-QdfHMWsou0/maxresdefault.jpg')

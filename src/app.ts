@@ -21,6 +21,7 @@ dotenv.config({ path: ".env.example" });
 
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
+import * as goalsController from "./controllers/goals";
 import * as userController from "./controllers/user";
 import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
@@ -91,6 +92,9 @@ app.use(
  * Primary app routes.
  */
 app.get("/", homeController.index);
+app.get("/goals", goalsController.index);
+app.get("/goals/queue", goalsController.queue);
+app.get("/goals/queue/add", goalsController.add);
 app.get("/login", userController.getLogin);
 app.post("/login", userController.postLogin);
 app.get("/logout", userController.logout);
