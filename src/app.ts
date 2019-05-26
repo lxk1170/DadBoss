@@ -70,49 +70,46 @@ app.use(
  * Middleware
  */
 app.use(async (req, res, next) => {
-  const carlId = "carl4" // TODO: remove
-  const count = await User.count({ _id: carlId })
-  console.log("count: " + count)
+  const carlUsername = "carl_is_12" // TODO: remove
+  const count = await User.count({ username: carlUsername })
+  let user
 
   if (count > 0) {
     // find
-    return User.findOne({ _id: carlId }, (err, user: IUser) => {
-      if (err) {
-        console.error("User exists, but unable to find")
-      } else {
-        console.info("user found and added")
-        req.user = user
-      }
-    })
+    const response = await User.findOne({ username: carlUsername })
+    user = response
   } else {
-    // create TODO: remove
-    const user: IUser = {
-      _id: carlId,
-      name: "CarlBites",
-      picture: "http://tiny.cc/3rzt6y",
-      friends: [420, 210],
-      hasGoal: false,
-      queue: ["fuck ur mommy", "shit your bed", "skydive", "eat her ass"],
-      achieved: ["run around naked", "preschool", "dog sitting"] // the last goal on active is the current goal
+    // TODO: fix up
+    // create new user
+    const newUser: IUser = {
+      _id: "",
+      username: carlUsername,      // tslint:disable-next-line: no-null-keyword
+      picture: null,
+      friends: [],
+      // tslint:disable-next-line:no-null-keyword
+      activeGoal: null,
+      queue: [],
+      achieved: []
     }
-    const userModel = new User(user)
+    const userModel = new User(newUser)
 
     // save
-    userModel.save((err: any, results) => {
-      console.log(results)
+    userModel.save((err: any, result) => {
       if (err) {
         console.log("failed to save new user")
-        console.error("error: " + err)
+        console.error("error: " + err + "\nresults: " + result)
       } else {
+        console.log("result: " + result)
         console.log("new user saved")
-        req.user = user
+        user = result
       }
     })
 
-    req.user = user
   }
 
+  req.user = user
   console.log("req.user: " + JSON.stringify(req.user))
+
   next()
 })
 
@@ -124,4 +121,5 @@ app.get("/goals", goalsController.index);
 app.get("/goals/queue", goalsController.queue);
 app.get("/goals/queue/add", goalsController.add);
 app.post("/goals/queue/add", goalsController.create)
+app.post("/goals/queue/select", goalsController.select)
 export default app;

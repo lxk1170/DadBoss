@@ -24,14 +24,18 @@ $(document).ready(function () {
 
   // goal/queue page
   // select goal from queue
-  $(".select-goal").click(() => {
-    const goal = $(this).attr("id")
-    console.log("selected goal: " + goal)
-    // TODO: post to backend /goals/active
-    console.log("TODO: post to backend")
-    console.log("TODO: get goal from id")
-  })
+  $(".select-goal").click((event) => {
+    const goal = event.target.id
+    $.post(window.location.origin + "/goals/queue/select", { goal: goal }, (msg) => {
+      // TODO: peek success message
+      console.log("received message: " + msg)
 
+      // redirect
+      setTimeout(() => {
+        window.location.href = "/goals"
+      }, 2000)
+    })
+  })
 
   // create a new goal
   $("#create-goal").click(() => {
