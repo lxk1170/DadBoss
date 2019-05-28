@@ -22,7 +22,7 @@
         ],
         "semicolon": [
             false,
-            "always",
+            "never",
             "ignore-bound-class-methods"
         ],
         "whitespace": [

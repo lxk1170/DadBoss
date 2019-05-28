@@ -57,6 +57,7 @@ export let create = async (req: Request, res: Response) => {
   const user = req.user
   console.log("goal: " + goal)
   user.queue.push(goal)
+
   if (updateUser(user)) {
     res.status(200).send("Queue successfully updated")
   } else {
@@ -70,9 +71,15 @@ export let create = async (req: Request, res: Response) => {
  */
 export let select = async (req: Request, res: Response) => {
   const goal = req.body.goal
-  console.log("TODO: select goal: " + goal)
   const user = req.user
   user.activeGoal = goal
+
+  // remove goal from queue
+  const idx = user.queue.indexOf(goal)
+  if (idx < 0) {
+    user.queue.splice(user.queue.indexOf(goal), 1);
+  }
+
   if (updateUser(user)) {
     res.status(200).send("New active goal successfully selected")
   } else {
